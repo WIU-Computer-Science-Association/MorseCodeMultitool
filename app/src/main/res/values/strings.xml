@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Morse Code Multitool</string>
+    <string name="text_to_translate">Text to Translate</string>
+    <string name="translated_text">Translated Text</string>
+    <string name="translate">Translate</string>
 </resources>
