@@ -16,7 +16,7 @@
         android:ems="10"
         android:hint="@string/text_to_translate"
         android:inputType="textMultiLine"
-        android:digits="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ."
+        android:digits="@string/allowedInput"
         android:singleLine="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
