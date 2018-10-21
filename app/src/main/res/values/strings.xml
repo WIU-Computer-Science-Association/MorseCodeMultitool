@@ -3,5 +3,7 @@
     <string name="text_to_translate">Text to Translate</string>
     <string name="translated_text">Translated Text</string>
     <string name="translate">Translate</string>
+    <string name="descFlashlight">Allows transmitting morse code from camera flash</string>
+    <string name="labFlashlight">Morse via Flashlight</string>
     <string name="allowedInput">0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz .,?\'!/-()\"</string>
 </resources>

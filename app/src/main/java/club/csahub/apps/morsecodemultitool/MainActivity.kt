@@ -1,12 +1,23 @@
 package club.csahub.apps.morsecodemultitool
 
+import android.content.Context
+import android.hardware.camera2.CameraCharacteristics.FLASH_INFO_AVAILABLE
+import android.hardware.camera2.CameraManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val oneTimeUnit = 150.toLong()
+
+    private val waitTimes: HashMap<Char, Long> = hashMapOf(
+            '.' to oneTimeUnit,
+            '-' to 3 * oneTimeUnit,
+            ' ' to 2 * oneTimeUnit,
+            '|' to oneTimeUnit
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun translateToMorse(v: View) {
-        var dict: HashMap<Char, String> = hashMapOf(
+        val dict: HashMap<Char, String> = hashMapOf(
                 'A' to ".- ",
                 'B' to "-... ",
                 'C' to "-.-. ",
@@ -77,8 +88,8 @@ class MainActivity : AppCompatActivity() {
                 '8' to "---.. ",
                 '9' to "----. ",
                 '0' to "----- ",
-                ' ' to "   ",
-                '.' to "   .-.-.- ",
+                ' ' to "| ",
+                '.' to ".-.-.- ",
                 ',' to "--..-- ",
                 '?' to "..--.. ",
                 '\'' to ".----. ",
@@ -89,12 +100,54 @@ class MainActivity : AppCompatActivity() {
                 ')' to "-.--.- ",
                 '"' to ".-..-. ")
 
-        val toTranslate = findViewById<EditText>(R.id.textToTranslate)
-        val translated = findViewById<EditText>(R.id.translatedText)
-
-        translated.text.clear()
-        toTranslate.text.forEach {
-            translated.text.append(dict[it])
+        translatedText.text.clear()
+        textToTranslate.text.forEach {
+            translatedText.text.append(dict[it])
         }
+
+        if (translatedText.text.isBlank()) {
+            btnAudio.isEnabled = false
+            btnFlashlight.isEnabled = false
+            btnVibrate.isEnabled = false
+        } else {
+            btnAudio.isEnabled = true
+            btnFlashlight.isEnabled = true
+            btnVibrate.isEnabled = true
+        }
+    }
+
+    fun replayAsLight(v: View) {        // This assumes that at least one camera has a flash!
+        val cam = getSystemService(Context.CAMERA_SERVICE) as CameraManager
+        var cameraToUse = "none"
+
+        cam.cameraIdList.forEach {
+            if (cam.getCameraCharacteristics(it.toString()).get(FLASH_INFO_AVAILABLE)) {
+                cameraToUse = it
+            }
+        }
+
+        translatedText.text.forEach {
+            val theWaitTime = waitTimes[it] as Long
+
+            if (it == ' ' || it == '|') {
+                Thread.sleep(theWaitTime)
+            } else {
+                cam.setTorchMode(cameraToUse, true)
+                Thread.sleep(theWaitTime)
+                cam.setTorchMode(cameraToUse, false)
+            }
+
+            Thread.sleep(oneTimeUnit)
+        }
+
+        //TODO("Ensure that flashlight isn't offered if there is no flash on the device")
+    }
+
+    fun replayAsVibration(v: View) {
+
+    }
+
+    fun replayAsSound(v: View) {
+
     }
 }

@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/btnAudio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="30dp"
+        android:enabled="false"
+        android:text="Audio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/translatedText" />
+
     <EditText
         android:id="@+id/textToTranslate"
         android:layout_width="336dp"
@@ -18,6 +29,7 @@
         android:inputType="textMultiLine"
         android:digits="@string/allowedInput"
         android:singleLine="false"
+        android:gravity="top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,14 +38,17 @@
     <EditText
         android:id="@+id/translatedText"
         android:layout_width="336dp"
-        android:layout_height="80dp"
+        android:layout_height="160dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
+        android:focusable="false"
+        android:gravity="top"
         android:hint="@string/translated_text"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textToTranslate" />
 
@@ -47,5 +62,30 @@
         android:text="@string/translate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnFlashlight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:enabled="false"
+        android:onClick="replayAsLight"
+        android:text="Flash"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/translatedText" />
+
+    <Button
+        android:id="@+id/btnVibrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:enabled="false"
+        android:text="Vibrate"
+        app:layout_constraintEnd_toStartOf="@+id/btnAudio"
+        app:layout_constraintStart_toEndOf="@+id/btnFlashlight"
+        app:layout_constraintTop_toBottomOf="@+id/translatedText" />
 
 </android.support.constraint.ConstraintLayout>
